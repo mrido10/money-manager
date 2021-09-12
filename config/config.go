@@ -17,6 +17,9 @@ type Config struct {
 		Host string `yaml:"host"`
 		Port string `yaml:"port"`
 	} `yaml:"server"`
+	Jwt struct {
+		Key string `yaml:"key"`
+	} `yaml:"jwt"`
 }
 
 func GetConfig() (*Config, error) {

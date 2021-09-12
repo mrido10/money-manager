@@ -10,6 +10,15 @@ import (
 )
 
 func RegisterTo(c *gin.Context) {
+	claims, err := util.Authorization(c)
+	if err != nil {
+		fmt.Println(err.Error())
+		util.Response(c, 401, "Unauthorized", nil)
+		return
+	}
+
+	fmt.Println(".. wellcome .. ", claims["name"])
+
 	action := c.Query("action")
 	name := c.Query("name")
 

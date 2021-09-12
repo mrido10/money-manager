@@ -9,6 +9,15 @@ import (
 )
 
 func GetList(c *gin.Context) {
+	claims, err := util.Authorization(c)
+	if err != nil {
+		fmt.Println(err.Error())
+		util.Response(c, 401, "Unauthorized", nil)
+		return
+	}
+
+	fmt.Println(".. wellcome .. ", claims["name"])
+
 	listName := c.Query("listName")
 
 	switch listName {

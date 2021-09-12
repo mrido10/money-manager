@@ -5,14 +5,16 @@ import (
 	"fmt"
 	"log"
 
-	_ "github.com/go-sql-driver/mysql"
 	"money-manager/config"
+
+	_ "github.com/go-sql-driver/mysql"
 )
 
 func ConnectMySQL() (*sql.DB, error) {
 	c, err := config.GetConfig()
 	if err != nil {
 		log.Fatal(err)
+		return nil, err
 	}
 
 	conn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", c.MySql.User, c.MySql.Password, c.Server.Host, c.Server.Port, c.MySql.DbName)
