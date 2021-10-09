@@ -31,6 +31,8 @@ func RegisterTo(c *gin.Context) {
 		toTransactionType(name, c)
 	case "toTransactionCategory":
 		toTransactionCategory(name, c)
+	case "userAccount":
+		
 	default:
 		fmt.Printf("Cant use this action: %s", action)
 	}
