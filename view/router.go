@@ -20,9 +20,10 @@ func StartService() {
 	}))
 
 	route.POST("/register", controller.RegisterTo)
-	route.GET("/getTransactionNote", controller.GetAllTrancsactionNote)
-	route.GET("/getList", controller.GetList)
 	route.POST("/registerUserAccount", controller.SaveUserAccount)
+
+	route.GET("/getList", controller.GetList)
+	route.GET("/getTotalTransactions", controller.GetListTotalCountTransaction)
 
 	if err := route.Run(":3002"); err != nil {
 		panic(err)
