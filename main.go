@@ -1,7 +1,7 @@
 package main
 
 import (
-	"money-manager/view"
+	"money-manager/router"
 )
 
 func main() {
