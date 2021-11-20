@@ -43,7 +43,7 @@ func GetListTotalCountTransaction(c *gin.Context) {
 	util.Response(c, 200, "succes", data)
 }
 
-func AddTransaction(c *gin.Context) {
+func AddOrUpdateNotes(c *gin.Context) {
 	claims, err := util.Authorization(c)
 	if err != nil {
 		fmt.Println(err.Error())
@@ -51,7 +51,7 @@ func AddTransaction(c *gin.Context) {
 		return
 	}
 
-	var data domain.Transaction
+	var data domain.Notes
 	if err := c.ShouldBindJSON(&data); err != nil {
 		fmt.Println(err)
 		util.Response(c, 400, err.Error(), nil)

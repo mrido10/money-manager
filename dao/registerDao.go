@@ -7,7 +7,7 @@ import (
 )
 
 func RegisterToAccountGroup(name string) error {
-	query := `INSERT INTO accountGroup (groupName)
+	query := `INSERT INTO walletGroup (groupName)
 			VALUE(?)`
 	return util.DBInsertExsecute(query, name)
 }

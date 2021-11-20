@@ -5,6 +5,7 @@ import (
 	"money-manager/dao"
 	"money-manager/model/domain"
 	"money-manager/util"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -20,12 +21,9 @@ func SaveUserAccount(c *gin.Context) {
 		util.Response(c, 401, "Unauthorized", nil)
 	}
 
-	fmt.Println(".. wellcome .. ", claims["name"])
-	fmt.Println(".. wellcome .. ", claims["id"])
-	fmt.Println(".. wellcome .. ", claims["loginAs"])
-
 	id, name := claims["id"].(string), claims["name"].(string)
-	var acc = UserAccount{id, name}
+	now := time.Now()
+	var acc = UserAccount{id, name, now}
 
 	// if err := c.ShouldBindJSON(&acc); err != nil {
 	// 	fmt.Println(err)

@@ -50,10 +50,10 @@ func GetCountTotalTransactions(userID string) (map[string]CountTotalTransactions
 	return result, nil
 }
 
-func InsertOrUpadateTransaction(trans domain.Transaction) error {
-	fmt.Println(trans)
-	query := `REPLACE INTO transaction 
-			(transactionID, userID, transactionTypeID, transactionCategoryID, accountID, amount, fromAccount, toAccount, description, transactionDate)
+func InsertOrUpadateTransaction(note domain.Notes) error {
+	query := `REPLACE INTO notes 
+			(notesID, userID, walletID, notesTypeID, notesCategoryID, notesName, 
+			amount, fromAccount, toAccount, description, notesDate)
 			VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
 	db, err := util.ConnectMySQL()
 	if err != nil {
@@ -61,17 +61,18 @@ func InsertOrUpadateTransaction(trans domain.Transaction) error {
 	}
 	defer db.Close()
 
-	rows, err := db.Query(query, 
-		trans.TransactionID, 
-		trans.UserId, 
-		trans.TransactionTypeID, 
-		trans.TransactionCategoryID,
-		trans.AccountID,
-		trans.Amount,
-		trans.FormAccount,
-		trans.ToAccount,
-		trans.Description,
-		trans.TransactionDate,	
+	rows, err := db.Query(query,
+		note.NotesID,
+		note.UserId,
+		note.WalletID,
+		note.NotesTypeID,
+		note.NotesCategoryID,
+		note.NotesName,
+		note.Amount,
+		note.FormAccount,
+		note.ToAccount,
+		note.Description,
+		note.NotesDate,
 	)
 	if err != nil {
 		return err

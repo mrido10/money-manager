@@ -1,8 +1,11 @@
 package main
 
 import (
-	"money-manager/router"
+	"log"
+	view "money-manager/router"
 )
+
+func init() { log.SetFlags(log.Lshortfile | log.LstdFlags) }
 
 func main() {
 	view.StartService()

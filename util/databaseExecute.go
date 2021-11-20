@@ -2,19 +2,20 @@ package util
 
 import (
 	"database/sql"
-	"fmt"
+	"log"
 )
 
 func DBInsertExsecute(query string, param ...interface{}) error {
 	db, err := ConnectMySQL()
 	if err != nil {
+		log.Println(err.Error())
 		return err
 	}
 	defer db.Close()
 
 	rows, err := db.Query(query, param...)
 	if err != nil {
-
+		log.Println(err.Error())
 		return err
 	}
 	defer rows.Close()
@@ -25,14 +26,15 @@ func DBInsertExsecute(query string, param ...interface{}) error {
 func DBSelectExsecute(query string, param ...interface{}) (*sql.Rows, error) {
 	db, err := ConnectMySQL()
 	if err != nil {
+		log.Println(err.Error())
 		return nil, err
 	}
 	defer db.Close()
-	fmt.Println(param...)
 
 	rows, err := db.Query(query, param...)
 
 	if err != nil {
+		log.Println(err.Error())
 		return nil, err
 	}
 	defer rows.Close()
