@@ -1,6 +1,8 @@
 package view
 
 import (
+	"log"
+	"money-manager/config"
 	"money-manager/controller"
 	"time"
 
@@ -28,7 +30,14 @@ func StartService() {
 	route.GET("/getTotalTransactions", controller.GetListTotalCountTransaction)
 	route.GET("/verify", controller.Verify)
 
-	if err := route.Run(":3002"); err != nil {
+	conf, err := config.GetConfig()
+	if err != nil {
+		log.Println(err)
+		return 
+	}
+
+	log.Println(conf.Server.Port)
+	if err := route.Run(":" + conf.Server.Port); err != nil {
 		panic(err)
 	}
 }

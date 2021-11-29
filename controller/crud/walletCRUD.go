@@ -5,46 +5,51 @@ import (
 	"money-manager/dao"
 	"money-manager/model/domain"
 	"money-manager/util"
-
-	"github.com/gin-gonic/gin"
 )
 
-func GetListWallet(c *gin.Context, userID string) {
-	listData, err := dao.GetListWallet(userID)
-	util.ToShowResp(listData, err, c)
+type Wallet interface {
+	GetListWallet()
+	GetListWalletByGroup()
+	SaveWallet()
 }
 
-func GetListWalletByGroup(c *gin.Context, userID string) {
+
+func (d DTO) GetListWallet() {
+	listData, err := dao.GetListWallet(d.UserID)
+	util.ToShowResp(listData, err, d.GinContext)
+}
+
+func (d DTO) GetListWalletByGroup() {
 	var data struct {
 		WalletGroupID string `json:"walletGroupID"`
 	}
-	if err := c.ShouldBindJSON(&data); err != nil {
+	if err := d.GinContext.ShouldBindJSON(&data); err != nil {
 		log.Println(err)
-		util.Response(c, 400, err.Error(), nil)
+		util.Response(d.GinContext, 400, err.Error(), nil)
 		return
 	}
-	listData, err := dao.GetListWalletByGroup(userID, data.WalletGroupID)
-	util.ToShowResp(listData, err, c)
+	listData, err := dao.GetListWalletByGroup(d.UserID, data.WalletGroupID)
+	util.ToShowResp(listData, err, d.GinContext)
 }
 
-func SaveWallet(c *gin.Context, userID string) {
+func (d DTO) SaveWallet() {
 	var data domain.Wallet
-	if err := c.ShouldBindJSON(&data); err != nil {
+	if err := d.GinContext.ShouldBindJSON(&data); err != nil {
 		log.Println(err)
-		util.Response(c, 400, err.Error(), nil)
+		util.Response(d.GinContext, 400, err.Error(), nil)
 		return
 	}
 
-	walletID, err := generateWalletId(userID)
+	walletID, err := generateWalletId(d.UserID)
 	if err != nil {
-		util.Response(c, 400, err.Error(), nil)
+		util.Response(d.GinContext, 400, err.Error(), nil)
 		return
 	}
-	data.UserID = userID
+	data.UserID = d.UserID
 	data.WalletID = walletID
 
 	dao.SaveWallet(data)
-	util.Response(c, 200, "succes save "+data.WalletName, nil)
+	util.Response(d.GinContext, 200, "succes save " + data.WalletName, nil)
 }
 
 func generateWalletId(userID string) (string, error) {

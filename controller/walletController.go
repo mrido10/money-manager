@@ -8,6 +8,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+var (
+	wallet      crud.Wallet
+	walletGroup crud.WalletGroup
+)
 func GetList(c *gin.Context) {
 	claims, err := util.Authorization(c)
 	if err != nil {
@@ -19,13 +23,23 @@ func GetList(c *gin.Context) {
 	userID := claims["id"].(string)
 	paramName := c.Query("name")
 
+	wallet = crud.DTO{
+		GinContext: c, 
+		UserID: userID,
+	}
+
+	walletGroup = crud.DTO{
+		GinContext: c, 
+		UserID: userID,
+	}
+
 	switch paramName {
 	case "getWallet":
-		crud.GetListWallet(c, userID)
+		wallet.GetListWallet()
 	case "getWalletByGroup":
-		crud.GetListWalletByGroup(c, userID)
+		wallet.GetListWalletByGroup()
 	case "getWalletGroup":
-		crud.GetListWalletGroup(c, userID)
+		walletGroup.GetListWalletGroup()
 	}
 }
 
@@ -39,10 +53,21 @@ func SaveWallet(c *gin.Context) {
 
 	userID := claims["id"].(string)
 	paramName := c.Query("name")
+	
+	wallet = crud.DTO{
+		GinContext: c, 
+		UserID: userID,
+	}
+
+	walletGroup = crud.DTO{
+		GinContext: c, 
+		UserID: userID,
+	}
+
 	switch paramName {
 	case "saveWallet":
-		crud.SaveWallet(c, userID)
+		wallet.SaveWallet()
 	case "saveWalletGroup":
-		crud.SaveWalletGroup(c, userID)
+		walletGroup.SaveWalletGroup()
 	}
 }
