@@ -22,7 +22,7 @@ func GetList(c *gin.Context) {
 	}
 
 	userID := claims["id"].(string)
-	paramName := c.Query("name")
+	action := c.Param("action")
 
 	wallet = crud.DTO{
 		GinContext: c, 
@@ -34,7 +34,7 @@ func GetList(c *gin.Context) {
 		UserID: userID,
 	}
 
-	switch paramName {
+	switch action {
 		case "getWallet":
 			wallet.GetListWallet()
 		case "getWalletByGroup":
@@ -55,7 +55,7 @@ func SaveWallet(c *gin.Context) {
 	}
 
 	userID := claims["id"].(string)
-	paramName := c.Query("name")
+	action := c.Param("action")
 	
 	wallet = crud.DTO{
 		GinContext: c, 
@@ -67,7 +67,7 @@ func SaveWallet(c *gin.Context) {
 		UserID: userID,
 	}
 
-	switch paramName {
+	switch action {
 		case "saveWallet":
 			wallet.SaveWallet()
 		case "saveWalletGroup":

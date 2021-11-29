@@ -24,9 +24,9 @@ func StartService() {
 	route.POST("/register", controller.RegisterTo)
 	route.POST("/registerUserAccount", controller.SaveUserAccount)
 	route.POST("/notes", controller.AddOrUpdateNotes)
-	route.POST("/wallet", controller.SaveWallet)
+	route.POST("/wallet/:action", controller.SaveWallet)
 
-	route.GET("/wallet", controller.GetList)
+	route.GET("/wallet/:action", controller.GetList)
 	route.GET("/getTotalTransactions", controller.GetListTotalCountTransaction)
 	route.GET("/verify", controller.Verify)
 
