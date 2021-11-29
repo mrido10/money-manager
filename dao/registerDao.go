@@ -9,7 +9,7 @@ import (
 func RegisterToAccountGroup(name string) error {
 	query := `INSERT INTO walletGroup (groupName)
 			VALUE(?)`
-	return util.DBInsertExsecute(query, name)
+	return util.DBExecute(query, name)
 }
 
 func RegisterToAccount(groupID int, accName string, amount int, desc string) error {
@@ -26,17 +26,17 @@ func RegisterToAccount(groupID int, accName string, amount int, desc string) err
 
 	var accNameSub *string = &accName
 	id := accName[:3] + tString
-	return util.DBInsertExsecute(query, id, groupID, *accNameSub, amount, desc)
+	return util.DBExecute(query, id, groupID, *accNameSub, amount, desc)
 }
 
 func RegisterToTransactionType(name string) error {
 	query := `INSERT INTO transactionType (typeName)
 			VALUE(?)`
-	return util.DBInsertExsecute(query, name)
+	return util.DBExecute(query, name)
 }
 
 func RegisterToTransactionCategory(name string) error {
 	query := `INSERT INTO transactionCategory (categoryName)
 	VALUE(?)`
-	return util.DBInsertExsecute(query, name)
+	return util.DBExecute(query, name)
 }

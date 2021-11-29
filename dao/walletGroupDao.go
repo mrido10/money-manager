@@ -90,5 +90,5 @@ func GetLastWalletGroupID(userID string) (string, error) {
 func SaveWalletGroup(wallet domain.WalletGroup) error {
 	query := `INSERT INTO walletgroup(walletGroupID, userID, groupName)
 			VALUE(?, ? , ?)`
-	return util.DBInsertExsecute(query, wallet.WalletGroupID, wallet.UserID, wallet.GroupName)
+	return util.DBExecute(query, wallet.WalletGroupID, wallet.UserID, wallet.GroupName)
 }

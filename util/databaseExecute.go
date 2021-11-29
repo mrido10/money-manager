@@ -5,7 +5,7 @@ import (
 	"log"
 )
 
-func DBInsertExsecute(query string, param ...interface{}) error {
+func DBExecute(query string, param ...interface{}) error {
 	db, err := ConnectMySQL()
 	if err != nil {
 		log.Println(err.Error())

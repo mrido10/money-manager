@@ -29,7 +29,7 @@ func CheckUserAccount(userID string) (int, error) {
 
 func InsertUserAccount(userId string, userName string) error {
 	query := `INSERT INTO userAccount(userID, userName) VALUE(?, ?)`
-	err := util.DBInsertExsecute(query, userId, userName)
+	err := util.DBExecute(query, userId, userName)
 	if err != nil {
 		return err
 	}
