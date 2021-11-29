@@ -4,6 +4,7 @@ import (
 	"log"
 	"money-manager/controller/crud"
 	"money-manager/util"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
@@ -34,12 +35,14 @@ func GetList(c *gin.Context) {
 	}
 
 	switch paramName {
-	case "getWallet":
-		wallet.GetListWallet()
-	case "getWalletByGroup":
-		wallet.GetListWalletByGroup()
-	case "getWalletGroup":
-		walletGroup.GetListWalletGroup()
+		case "getWallet":
+			wallet.GetListWallet()
+		case "getWalletByGroup":
+			wallet.GetListWalletByGroup()
+		case "getWalletGroup":
+			walletGroup.GetListWalletGroup()
+		default:
+			util.Response(c, http.StatusNotFound, "Not Found", nil)
 	}
 }
 
@@ -65,9 +68,13 @@ func SaveWallet(c *gin.Context) {
 	}
 
 	switch paramName {
-	case "saveWallet":
-		wallet.SaveWallet()
-	case "saveWalletGroup":
-		walletGroup.SaveWalletGroup()
+		case "saveWallet":
+			wallet.SaveWallet()
+		case "saveWalletGroup":
+			walletGroup.SaveWalletGroup()
+		case "deleteWallet":
+			wallet.DeleteWallet()
+		default:
+			util.Response(c, http.StatusNotFound, "Not Found", nil)
 	}
 }

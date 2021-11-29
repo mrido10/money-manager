@@ -109,7 +109,7 @@ func GetListWalletByGroup(userID string, walletGroupID string) ([]domain.Wallet,
 func SaveWallet(wallet domain.Wallet) error {
 	query := `INSERT INTO wallet(walletID, userID, walletGroupID, walletName, amount, description)
 			VALUE(?, ? , ?, ?, ?, ?)`
-	return util.DBInsertExsecute(query, wallet.WalletID, wallet.UserID, wallet.WalletGroupID, wallet.WalletName, wallet.Amount, wallet.Description)
+	return util.DBExecute(query, wallet.WalletID, wallet.UserID, wallet.WalletGroupID, wallet.WalletName, wallet.Amount, wallet.Description)
 }
 
 func GetLastWalletID(userID string) (string, error) {
@@ -146,4 +146,9 @@ func GetLastWalletID(userID string) (string, error) {
 	}
 
 	return result, nil
+}
+
+func DeleteWallet(walletID string, userID string) error {
+	query := `DELETE FROM wallet WHERE walletID = ? AND userID = ?`
+	return util.DBExecute(query, walletID, userID)
 }

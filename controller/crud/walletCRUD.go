@@ -11,6 +11,7 @@ type Wallet interface {
 	GetListWallet()
 	GetListWalletByGroup()
 	SaveWallet()
+	DeleteWallet()
 }
 
 
@@ -60,4 +61,22 @@ func generateWalletId(userID string) (string, error) {
 	}
 
 	return util.GenerateID(latestWalletID, "WAL"), nil
+}
+
+func (d DTO) DeleteWallet() {
+	var data struct {
+		WalletID string `json:"walletID"`
+	}
+	if err := d.GinContext.ShouldBindJSON(&data); err != nil {
+		log.Println(err)
+		util.Response(d.GinContext, 400, err.Error(), nil)
+		return
+	}
+	err := dao.DeleteWallet(data.WalletID, d.UserID)
+	if err != nil {
+		log.Println(err)
+		util.Response(d.GinContext, 400, err.Error(), nil)
+		return
+	}
+	util.Response(d.GinContext, 200, "succes delete " + data.WalletID, nil)
 }
