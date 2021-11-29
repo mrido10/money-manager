@@ -2,7 +2,6 @@ package util
 
 import (
 	"database/sql"
-	"fmt"
 	"log"
 
 	"money-manager/config"
@@ -17,8 +16,7 @@ func ConnectMySQL() (*sql.DB, error) {
 		return nil, err
 	}
 
-	conn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", c.MySql.User, c.MySql.Password, c.Server.Host, c.Server.Port, c.MySql.DbName)
-	db, err := sql.Open("mysql", conn)
+	db, err := sql.Open("mysql", c.MySql.DataSource)
 	if err != nil {
 		return nil, err
 	}

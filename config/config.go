@@ -9,9 +9,7 @@ import (
 
 type Config struct {
 	MySql struct {
-		User     string `yaml:"user"`
-		Password string `yaml:"password"`
-		DbName   string `yaml:"dbName"`
+		DataSource string `yaml:"dataSource"`
 	} `yaml:"mySql"`
 	Server struct {
 		Host string `yaml:"host"`
