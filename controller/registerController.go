@@ -1,94 +1,94 @@
 package controller
 
-import (
-	"fmt"
-	"money-manager/dao"
-	"money-manager/util"
-	"strconv"
+// import (
+// 	"fmt"
+// 	"money-manager/dao"
+// 	"money-manager/util"
+// 	"strconv"
 
-	"github.com/gin-gonic/gin"
-)
+// 	"github.com/gin-gonic/gin"
+// )
 
-func RegisterTo(c *gin.Context) {
-	claims, err := util.Authorization(c)
-	if err != nil {
-		fmt.Println(err.Error())
-		util.Response(c, 401, "Unauthorized", nil)
-		return
-	}
+// func RegisterTo(c *gin.Context) {
+// 	claims, err := util.Authorization(c)
+// 	if err != nil {
+// 		fmt.Println(err.Error())
+// 		util.Response(c, 401, "Unauthorized", nil)
+// 		return
+// 	}
 
-	fmt.Println(".. wellcome .. ", claims["name"])
+// 	fmt.Println(".. wellcome .. ", claims["name"])
 
-	action := c.Query("action")
-	name := c.Query("name")
+// 	action := c.Query("action")
+// 	name := c.Query("name")
 
-	switch action {
-	case "toAccountGroup":
-		toAccountGroup(name, c)
-	case "toAccount":
-		toAccount(c)
-	case "toTransactionType":
-		toTransactionType(name, c)
-	case "toTransactionCategory":
-		toTransactionCategory(name, c)
-	case "userAccount":
-		
-	default:
-		fmt.Printf("Cant use this action: %s", action)
-	}
-}
+// 	switch action {
+// 	case "toAccountGroup":
+// 		toAccountGroup(name, c)
+// 	case "toAccount":
+// 		toAccount(c)
+// 	case "toTransactionType":
+// 		toTransactionType(name, c)
+// 	case "toTransactionCategory":
+// 		toTransactionCategory(name, c)
+// 	case "userAccount":
 
-func toAccountGroup(name string, c *gin.Context) {
-	err := dao.RegisterToAccountGroup(name)
-	if err != nil {
-		fmt.Println(err.Error())
-		util.GinJsonResp(c, 400, err.Error(), false)
-		return
-	}
+// 	default:
+// 		fmt.Printf("Cant use this action: %s", action)
+// 	}
+// }
 
-	util.GinJsonResp(c, 200, "succes", true)
-}
+// func toAccountGroup(name string, c *gin.Context) {
+// 	err := dao.RegisterToAccountGroup(name)
+// 	if err != nil {
+// 		fmt.Println(err.Error())
+// 		util.GinJsonResp(c, 400, err.Error(), false)
+// 		return
+// 	}
 
-func toAccount(c *gin.Context) {
-	groupID, _ := strconv.Atoi(c.Query("groupID"))
-	accName := c.Query("accountName")
-	amount, _ := strconv.Atoi(c.Query("amount"))
-	desc := c.Query("desc")
+// 	util.GinJsonResp(c, 200, "succes", true)
+// }
 
-	if accName == "" {
-		fmt.Print("accounName is empty")
-		util.GinJsonResp(c, 400, "accounName is empty", false)
-		return
-	}
+// func toAccount(c *gin.Context) {
+// 	groupID, _ := strconv.Atoi(c.Query("groupID"))
+// 	accName := c.Query("accountName")
+// 	amount, _ := strconv.Atoi(c.Query("amount"))
+// 	desc := c.Query("desc")
 
-	err := dao.RegisterToAccount(groupID, accName, amount, desc)
-	if err != nil {
-		fmt.Println(err.Error())
-		util.GinJsonResp(c, 400, err.Error(), false)
-		return
-	}
+// 	if accName == "" {
+// 		fmt.Print("accounName is empty")
+// 		util.GinJsonResp(c, 400, "accounName is empty", false)
+// 		return
+// 	}
 
-	util.GinJsonResp(c, 200, "succes", true)
-}
+// 	err := dao.RegisterToAccount(groupID, accName, amount, desc)
+// 	if err != nil {
+// 		fmt.Println(err.Error())
+// 		util.GinJsonResp(c, 400, err.Error(), false)
+// 		return
+// 	}
 
-func toTransactionType(name string, c *gin.Context) {
-	err := dao.RegisterToTransactionType(name)
-	if err != nil {
-		fmt.Println(err.Error())
-		util.GinJsonResp(c, 400, err.Error(), false)
-		return
-	}
+// 	util.GinJsonResp(c, 200, "succes", true)
+// }
 
-	util.GinJsonResp(c, 200, "succes", true)
-}
+// func toTransactionType(name string, c *gin.Context) {
+// 	err := dao.RegisterToTransactionType(name)
+// 	if err != nil {
+// 		fmt.Println(err.Error())
+// 		util.GinJsonResp(c, 400, err.Error(), false)
+// 		return
+// 	}
 
-func toTransactionCategory(name string, c *gin.Context) {
-	err := dao.RegisterToTransactionCategory(name)
-	if err != nil {
-		fmt.Println(err.Error())
-		util.GinJsonResp(c, 400, err.Error(), false)
-		return
-	}
+// 	util.GinJsonResp(c, 200, "succes", true)
+// }
 
-	util.GinJsonResp(c, 200, "succes", true)
-}
+// func toTransactionCategory(name string, c *gin.Context) {
+// 	err := dao.RegisterToTransactionCategory(name)
+// 	if err != nil {
+// 		fmt.Println(err.Error())
+// 		util.GinJsonResp(c, 400, err.Error(), false)
+// 		return
+// 	}
+
+// 	util.GinJsonResp(c, 200, "succes", true)
+// }

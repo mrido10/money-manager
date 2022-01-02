@@ -1,80 +1,102 @@
 package controller
 
-import (
-	"log"
-	"money-manager/controller/crud"
-	"money-manager/util"
-	"net/http"
+// import (
+// 	"log"
+// 	"money-manager/controller/crud"
+// 	"money-manager/service/walletService"
+// 	"money-manager/util"
+// 	"net/http"
 
-	"github.com/gin-gonic/gin"
-)
+// 	"github.com/gin-gonic/gin"
+// )
 
-var (
-	wallet      crud.Wallet
-	walletGroup crud.WalletGroup
-)
-func GetList(c *gin.Context) {
-	claims, err := util.Authorization(c)
-	if err != nil {
-		log.Println(err.Error())
-		util.Response(c, 401, "Unauthorized", nil)
-		return
-	}
+// var (
+// 	wallet      crud.Wallet
+// 	walletGroup crud.WalletGroup
+// )
 
-	userID := claims["id"].(string)
-	action := c.Param("action")
+// type walletStruct struct {
+// 	util.DataIn
+// }
 
-	wallet = crud.DTO{
-		GinContext: c, 
-		UserID: userID,
-	}
+// var WalletController = walletStruct{}
 
-	walletGroup = crud.DTO{
-		GinContext: c, 
-		UserID: userID,
-	}
+// func (validate walletStruct) GetList(c *gin.Context) {
+// 	action := c.Param("action")
+// 	switch action {
+// 	case "getWallet":
+// 		validate.JWTValidations(c, walletService.WalletService.GetWallet)
+// 	case "getWalletByGroup":
+// 		wallet.GetListWalletByGroup()
+// 	case "getWalletGroup":
+// 		walletGroup.GetListWalletGroup()
+// 	default:
+// 		util.Response(c, http.StatusNotFound, "Not Found", nil)
+// 	}
+// }
 
-	switch action {
-		case "getWallet":
-			wallet.GetListWallet()
-		case "getWalletByGroup":
-			wallet.GetListWalletByGroup()
-		case "getWalletGroup":
-			walletGroup.GetListWalletGroup()
-		default:
-			util.Response(c, http.StatusNotFound, "Not Found", nil)
-	}
-}
+// // func GetList(c *gin.Context) {
+// // 	claims, err := util.Authorization(c)
+// // 	if err != nil {
+// // 		log.Println(err.Error())
+// // 		util.Response(c, 401, "Unauthorized", nil)
+// // 		return
+// // 	}
 
-func SaveWallet(c *gin.Context) {
-	claims, err := util.Authorization(c)
-	if err != nil {
-		log.Println(err.Error())
-		util.Response(c, 401, "Unauthorized", nil)
-		return
-	}
+// // 	userID := claims["id"].(string)
+// // 	action := c.Param("action")
 
-	userID := claims["id"].(string)
-	action := c.Param("action")
+// // 	wallet = crud.DTO{
+// // 		GinContext: c, 
+// // 		UserID: userID,
+// // 	}
+
+// // 	walletGroup = crud.DTO{
+// // 		GinContext: c, 
+// // 		UserID: userID,
+// // 	}
+
+// // 	switch action {
+// // 		case "getWallet":
+// // 			wallet.GetListWallet()
+// // 		case "getWalletByGroup":
+// // 			wallet.GetListWalletByGroup()
+// // 		case "getWalletGroup":
+// // 			walletGroup.GetListWalletGroup()
+// // 		default:
+// // 			util.Response(c, http.StatusNotFound, "Not Found", nil)
+// // 	}
+// // }
+
+// func SaveWallet(c *gin.Context) {
+// 	claims, err := util.Authorization(c)
+// 	if err != nil {
+// 		log.Println(err.Error())
+// 		util.Response(c, 401, "Unauthorized", nil)
+// 		return
+// 	}
+
+// 	userID := claims["id"].(string)
+// 	action := c.Param("action")
 	
-	wallet = crud.DTO{
-		GinContext: c, 
-		UserID: userID,
-	}
+// 	wallet = crud.DTO{
+// 		GinContext: c, 
+// 		UserID: userID,
+// 	}
 
-	walletGroup = crud.DTO{
-		GinContext: c, 
-		UserID: userID,
-	}
+// 	walletGroup = crud.DTO{
+// 		GinContext: c, 
+// 		UserID: userID,
+// 	}
 
-	switch action {
-		case "saveWallet":
-			wallet.SaveWallet()
-		case "saveWalletGroup":
-			walletGroup.SaveWalletGroup()
-		case "deleteWallet":
-			wallet.DeleteWallet()
-		default:
-			util.Response(c, http.StatusNotFound, "Not Found", nil)
-	}
-}
+// 	switch action {
+// 		case "saveWallet":
+// 			wallet.SaveWallet()
+// 		case "saveWalletGroup":
+// 			walletGroup.SaveWalletGroup()
+// 		case "deleteWallet":
+// 			wallet.DeleteWallet()
+// 		default:
+// 			util.Response(c, http.StatusNotFound, "Not Found", nil)
+// 	}
+// }

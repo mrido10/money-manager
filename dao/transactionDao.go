@@ -2,7 +2,7 @@ package dao
 
 import (
 	"fmt"
-	"money-manager/model/domain"
+	"money-manager/repository"
 	"money-manager/util"
 )
 
@@ -50,7 +50,7 @@ func GetCountTotalTransactions(userID string) (map[string]CountTotalTransactions
 	return result, nil
 }
 
-func InsertOrUpadateTransaction(note domain.Notes) error {
+func InsertOrUpadateTransaction(note repository.Notes) error {
 	query := `REPLACE INTO notes 
 			(notesID, userID, walletID, notesTypeID, notesCategoryID, notesName, 
 			amount, fromAccount, toAccount, description, notesDate)

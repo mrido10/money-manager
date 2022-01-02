@@ -2,11 +2,11 @@ package dao
 
 import (
 	"log"
-	"money-manager/model/domain"
+	"money-manager/repository"
 	"money-manager/util"
 )
 
-func GetListWalletGroup(userID string) ([]domain.WalletGroup, error) {
+func GetListWalletGroup(userID string) ([]repository.WalletGroup, error) {
 	query := `SELECT * FROM walletgroup WHERE userID = ?`
 
 	db, err := util.ConnectMySQL()
@@ -23,10 +23,10 @@ func GetListWalletGroup(userID string) ([]domain.WalletGroup, error) {
 
 	if err != nil {
 		log.Println(err.Error())
-		return []domain.WalletGroup{}, err
+		return []repository.WalletGroup{}, err
 	}
 
-	var result []domain.WalletGroup
+	var result []repository.WalletGroup
 
 	for rows.Next() {
 		acc := walletGroup
@@ -38,14 +38,14 @@ func GetListWalletGroup(userID string) ([]domain.WalletGroup, error) {
 
 		if err != nil {
 			log.Println(err.Error())
-			return []domain.WalletGroup{}, err
+			return []repository.WalletGroup{}, err
 		}
 
 		result = append(result, acc)
 	}
 
 	if err = rows.Err(); err != nil {
-		return []domain.WalletGroup{}, err
+		return []repository.WalletGroup{}, err
 	}
 
 	return result, nil
@@ -87,7 +87,7 @@ func GetLastWalletGroupID(userID string) (string, error) {
 	return result, nil
 }
 
-func SaveWalletGroup(wallet domain.WalletGroup) error {
+func SaveWalletGroup(wallet repository.WalletGroup) error {
 	query := `INSERT INTO walletgroup(walletGroupID, userID, groupName)
 			VALUE(?, ? , ?)`
 	return util.DBExecute(query, wallet.WalletGroupID, wallet.UserID, wallet.GroupName)

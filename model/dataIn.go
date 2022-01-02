@@ -1,8 +1,8 @@
-package crud
+package model
 
 import "github.com/gin-gonic/gin"
 
-type DTO struct {
+type DataIN struct {
 	GinContext *gin.Context
 	UserID     string
 	UserName   string

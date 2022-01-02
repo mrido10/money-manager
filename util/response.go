@@ -2,13 +2,13 @@ package util
 
 import (
 	"log"
-	"money-manager/model"
+	"money-manager/model/responseModel"
 
 	"github.com/gin-gonic/gin"
 )
 
 var (
-	resp model.Response
+	resp responseModel.Response
 )
 
 func GinJsonResp(c *gin.Context, code int, msg interface{}, status bool) {
@@ -21,6 +21,7 @@ func GinJsonResp(c *gin.Context, code int, msg interface{}, status bool) {
 func Response(c *gin.Context, statusCode int, msg string, data interface{}) {
 	resp.Message = msg
 	resp.Data = data
+	resp.Code = statusCode
 	if statusCode == 200 {
 		resp.Status = true
 	} else {

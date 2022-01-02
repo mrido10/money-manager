@@ -1,8 +1,9 @@
-package model
+package responseModel
 
 
 type Response struct {
-	Message string      `json:"message"`
+	Code 	int 		`json:"code"`
 	Status  bool        `json:"status"`
+	Message string      `json:"message"`
 	Data    interface{} `json:"data"`
 }

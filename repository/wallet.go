@@ -1,4 +1,4 @@
-package domain
+package repository
 
 type Wallet struct {
 	WalletID      string `json:"walletID"`
