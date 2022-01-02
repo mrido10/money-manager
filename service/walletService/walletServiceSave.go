@@ -4,11 +4,11 @@ import (
 	"log"
 	"money-manager/dao"
 	"money-manager/model"
-	"money-manager/model/domain"
+	"money-manager/repository"
 )
 
 func (d data) SaveWallet(c model.DataIN) (listData interface{}, responseCode int, msg string, err error) {
-	var dtWallet domain.Wallet
+	var dtWallet repository.Wallet
 	if err = c.GinContext.ShouldBindJSON(&dtWallet); err != nil {
 		log.Println(err)
 		return
