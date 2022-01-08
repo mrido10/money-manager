@@ -6,7 +6,7 @@ import (
 	"money-manager/model"
 )
 
-func (d data) DeleteWallet(c model.DataIN) (listData interface{}, responseCode int, msg string, err error) {
+func DeleteWallet(c model.DataIN) (listData interface{}, responseCode int, msg string, err error) {
 	var dtWallet struct {
 		WalletID string `json:"walletID"`
 	}

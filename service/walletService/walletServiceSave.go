@@ -7,7 +7,7 @@ import (
 	"money-manager/repository"
 )
 
-func (d data) SaveWallet(c model.DataIN) (listData interface{}, responseCode int, msg string, err error) {
+func SaveWallet(c model.DataIN) (listData interface{}, responseCode int, msg string, err error) {
 	var dtWallet repository.Wallet
 	if err = c.GinContext.ShouldBindJSON(&dtWallet); err != nil {
 		log.Println(err)
@@ -17,8 +17,7 @@ func (d data) SaveWallet(c model.DataIN) (listData interface{}, responseCode int
 	walletID, errr := generateWalletId(c.UserID)
 	if errr != nil {
 		log.Println(errr)
-		msg = errr.Error()
-		err = errr
+		responseCode, msg, err = 400, errr.Error(), errr
 		return
 	}
 	dtWallet.UserID = c.UserID
@@ -26,10 +25,9 @@ func (d data) SaveWallet(c model.DataIN) (listData interface{}, responseCode int
 
 	err = dao.SaveWallet(dtWallet)
 	if err != nil {
-		msg = err.Error()
+		responseCode, msg= 400, err.Error()
 		return
 	}
-	responseCode = 200
-	msg = "succes save " + dtWallet.WalletName
+	responseCode, msg = 200, "succes save " + dtWallet.WalletName
 	return
 }

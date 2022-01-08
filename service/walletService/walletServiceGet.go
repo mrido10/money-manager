@@ -6,13 +6,13 @@ import (
 	"money-manager/util"
 )
 
-func (d data) GetWallet(c model.DataIN) (listData interface{}, responseCode int, msg string, err error) {
+func GetWallet(c model.DataIN) (listData interface{}, responseCode int, msg string, err error) {
 	listData, err = dao.GetListWallet(c.UserID)
 	responseCode = 200
 	return 
 }
 
-func (d data) GetWalletWithPagination(c model.DataIN) (listData interface{}, responseCode int, msg string, err error) {
+func GetWalletWithPagination(c model.DataIN) (listData interface{}, responseCode int, msg string, err error) {
 	isPaginateExist, msg, limit, offset := util.IsExistParameterLimitAndOffset(c.GinContext)
 	if !isPaginateExist {
 		return
@@ -23,7 +23,7 @@ func (d data) GetWalletWithPagination(c model.DataIN) (listData interface{}, res
 	return 
 }
 
-func (d data) GetListWalletByGroup(c model.DataIN) (listData interface{}, responseCode int, msg string, err error) {
+func GetListWalletByGroup(c model.DataIN) (listData interface{}, responseCode int, msg string, err error) {
 	var dtByGroup struct {
 		WalletGroupID string `json:"walletGroupID"`
 	}

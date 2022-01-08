@@ -3,7 +3,6 @@ package walletEndpoint
 import (
 	"money-manager/service/walletService"
 	"money-manager/util"
-	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
@@ -12,19 +11,19 @@ type walletStruct struct {
 	util.DataIn
 }
 
-var WalletController = walletStruct{}
+var WalletEndpoint = walletStruct{}
 
 func (validate walletStruct) GetWallet(c *gin.Context) {
 	action := c.Param("action")
 	switch action {
 	case "getWallet":
-		validate.JWTValidations(c, walletService.WalletService.GetWallet)
+		validate.JWTValidations(c, walletService.GetWallet)
 	case "getWalletWithPagination":
-		validate.JWTValidations(c, walletService.WalletService.GetWalletWithPagination)
+		validate.JWTValidations(c, walletService.GetWalletWithPagination)
 	case "getWalletByGroup":
-		validate.JWTValidations(c, walletService.WalletService.GetListWalletByGroup)
+		validate.JWTValidations(c, walletService.GetListWalletByGroup)
 	default:
-		util.Response(c, http.StatusNotFound, "Not Found", nil)
+		util.ResponseNotFound(c)
 	}
 }
 
@@ -32,9 +31,9 @@ func (validate walletStruct) SaveWallet(c *gin.Context) {
 	action := c.Param("action")
 	switch action {
 	case "saveWallet":
-		validate.JWTValidations(c, walletService.WalletService.SaveWallet)
+		validate.JWTValidations(c, walletService.SaveWallet)
 	default:
-		util.Response(c, http.StatusNotFound, "Not Found", nil)
+		util.ResponseNotFound(c)
 	}
 }
 
@@ -42,8 +41,8 @@ func (validate walletStruct) DeleteWallet(c *gin.Context) {
 	action := c.Param("action")
 	switch action {
 	case "deleteWallet":
-		validate.JWTValidations(c, walletService.WalletService.DeleteWallet)
+		validate.JWTValidations(c, walletService.DeleteWallet)
 	default:
-		util.Response(c, http.StatusNotFound, "Not Found", nil)
+		util.ResponseNotFound(c)
 	}
 }

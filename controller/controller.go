@@ -4,14 +4,20 @@ import (
 	"log"
 	"money-manager/config"
 	"money-manager/endpoint/walletEndpoint"
+	"money-manager/endpoint/walletGroupEndpoint"
 
 	"github.com/gin-gonic/gin"
 )
 
 func Route(route *gin.Engine) {
-	route.GET("/wallet/:action", walletEndpoint.WalletController.GetWallet)
-	route.POST("/wallet/:action", walletEndpoint.WalletController.SaveWallet)
-	route.DELETE("/wallet/:action", walletEndpoint.WalletController.DeleteWallet)
+	walletRoute := "/wallet/:action"
+	route.GET(walletRoute, walletEndpoint.WalletEndpoint.GetWallet)
+	route.POST(walletRoute, walletEndpoint.WalletEndpoint.SaveWallet)
+	route.DELETE(walletRoute, walletEndpoint.WalletEndpoint.DeleteWallet)
+
+	walletGroupRoute := "/walletGroup/:action"
+	route.GET(walletGroupRoute, walletGroupEndpoint.WalletGroupEndpoint.GetWalletGroup)
+	route.POST(walletGroupRoute, walletGroupEndpoint.WalletGroupEndpoint.SaveWalletGroup)
 
 	conf, err := config.GetConfig()
 	if err != nil {
@@ -19,7 +25,6 @@ func Route(route *gin.Engine) {
 		return 
 	}
 
-	log.Println(conf.Server.Port)
 	if err := route.Run(":" + conf.Server.Port); err != nil {
 		panic(err)
 	}

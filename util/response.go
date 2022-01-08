@@ -3,6 +3,7 @@ package util
 import (
 	"log"
 	"money-manager/model/responseModel"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
@@ -39,4 +40,8 @@ func ToShowResp(data interface{}, err error, c *gin.Context) {
 	}
 
 	Response(c, 200, "succes", data)
+}
+
+func ResponseNotFound(c *gin.Context) {
+	Response(c, http.StatusNotFound, "Not Found", nil)
 }

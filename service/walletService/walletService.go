@@ -4,15 +4,8 @@ import (
 	"log"
 	"money-manager/dao"
 
-	// "money-manager/model"
 	"money-manager/util"
 )
-
-type data struct {
-	// model.DataIN
-}
-
-var WalletService = data{}
 
 func generateWalletId(userID string) (string, error) {
 	latestWalletID, err := dao.GetLastWalletID(userID)
