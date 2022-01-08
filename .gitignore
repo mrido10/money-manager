@@ -1,2 +1,5 @@
 /config/config.yaml
-.vscode
+/.vscode
+/.scannerwork
+sonar-project.properties
+__debug_bin.exe
