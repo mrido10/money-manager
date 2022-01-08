@@ -1,22 +1,23 @@
 package walletService
 
 import (
-	"log"
 	"money-manager/dao"
 	"money-manager/model"
 	"money-manager/repository"
+
+	log "github.com/sirupsen/logrus"
 )
 
 func SaveWallet(c model.DataIN) (listData interface{}, responseCode int, msg string, err error) {
 	var dtWallet repository.Wallet
 	if err = c.GinContext.ShouldBindJSON(&dtWallet); err != nil {
-		log.Println(err)
+		log.Error(err)
 		return
 	}
 
 	walletID, errr := generateWalletId(c.UserID)
 	if errr != nil {
-		log.Println(errr)
+		log.Error(errr)
 		responseCode, msg, err = 400, errr.Error(), errr
 		return
 	}

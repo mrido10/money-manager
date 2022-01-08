@@ -1,7 +1,7 @@
 package dao
 
 import (
-	"log"
+	log "github.com/sirupsen/logrus"
 	"money-manager/repository"
 	"money-manager/util"
 )
@@ -16,7 +16,7 @@ func GetListWallet(userID string) ([]repository.Wallet, error) {
 
 	db, err := util.ConnectMySQL()
 	if err != nil {
-		log.Println(err.Error())
+		log.Error(err.Error())
 		return nil, err
 	}
 	defer db.Close()
@@ -24,7 +24,7 @@ func GetListWallet(userID string) ([]repository.Wallet, error) {
 	rows, err := db.Query(query, userID)
 
 	if err != nil {
-		log.Println(err.Error())
+		log.Error(err.Error())
 		return []repository.Wallet{}, err
 	}
 	defer rows.Close()
@@ -43,7 +43,7 @@ func GetListWallet(userID string) ([]repository.Wallet, error) {
 		)
 
 		if err != nil {
-			log.Println(err.Error())
+			log.Error(err.Error())
 			return []repository.Wallet{}, err
 		}
 
@@ -51,7 +51,7 @@ func GetListWallet(userID string) ([]repository.Wallet, error) {
 	}
 
 	if err = rows.Err(); err != nil {
-		log.Println(err.Error())
+		log.Error(err.Error())
 		return []repository.Wallet{}, err
 	}
 
@@ -64,7 +64,7 @@ func GetListWalletByPagin(userID string, limit int, offset int) ([]repository.Wa
 
 	db, err := util.ConnectMySQL()
 	if err != nil {
-		log.Println(err.Error())
+		log.Error(err.Error())
 		return nil, err
 	}
 	defer db.Close()
@@ -72,7 +72,7 @@ func GetListWalletByPagin(userID string, limit int, offset int) ([]repository.Wa
 	rows, err := db.Query(query, userID, limit, offset)
 
 	if err != nil {
-		log.Println(err.Error())
+		log.Error(err.Error())
 		return []repository.Wallet{}, err
 	}
 	defer rows.Close()
@@ -91,7 +91,7 @@ func GetListWalletByPagin(userID string, limit int, offset int) ([]repository.Wa
 		)
 
 		if err != nil {
-			log.Println(err.Error())
+			log.Error(err.Error())
 			return []repository.Wallet{}, err
 		}
 
@@ -99,7 +99,7 @@ func GetListWalletByPagin(userID string, limit int, offset int) ([]repository.Wa
 	}
 
 	if err = rows.Err(); err != nil {
-		log.Println(err.Error())
+		log.Error(err.Error())
 		return []repository.Wallet{}, err
 	}
 
@@ -112,7 +112,7 @@ func GetListWalletByGroup(userID string, walletGroupID string) ([]repository.Wal
 
 	db, err := util.ConnectMySQL()
 	if err != nil {
-		log.Println(err.Error())
+		log.Error(err.Error())
 		return nil, err
 	}
 	defer db.Close()
@@ -120,7 +120,7 @@ func GetListWalletByGroup(userID string, walletGroupID string) ([]repository.Wal
 	rows, err := db.Query(query, userID, walletGroupID)
 
 	if err != nil {
-		log.Println(err.Error())
+		log.Error(err.Error())
 		return []repository.Wallet{}, err
 	}
 	defer rows.Close()
@@ -139,7 +139,7 @@ func GetListWalletByGroup(userID string, walletGroupID string) ([]repository.Wal
 		)
 
 		if err != nil {
-			log.Println(err.Error())
+			log.Error(err.Error())
 			return []repository.Wallet{}, err
 		}
 
@@ -147,7 +147,7 @@ func GetListWalletByGroup(userID string, walletGroupID string) ([]repository.Wal
 	}
 
 	if err = rows.Err(); err != nil {
-		log.Println(err.Error())
+		log.Error(err.Error())
 		return []repository.Wallet{}, err
 	}
 
@@ -165,7 +165,7 @@ func GetLastWalletID(userID string) (string, error) {
 
 	db, err := util.ConnectMySQL()
 	if err != nil {
-		log.Println(err.Error())
+		log.Error(err.Error())
 		return "", err
 	}
 	defer db.Close()
@@ -173,7 +173,7 @@ func GetLastWalletID(userID string) (string, error) {
 	rows, err := db.Query(query)
 
 	if err != nil {
-		log.Println(err.Error())
+		log.Error(err.Error())
 		return "", err
 	}
 	defer rows.Close()
@@ -183,13 +183,13 @@ func GetLastWalletID(userID string) (string, error) {
 	for rows.Next() {
 		err = rows.Scan(&result)
 		if err != nil {
-			log.Println(err.Error())
+			log.Error(err.Error())
 			return "", err
 		}
 	}
 
 	if err = rows.Err(); err != nil {
-		log.Println(err.Error())
+		log.Error(err.Error())
 		return "", err
 	}
 

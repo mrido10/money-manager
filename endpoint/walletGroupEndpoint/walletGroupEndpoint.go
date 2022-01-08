@@ -5,6 +5,7 @@ import (
 	"money-manager/util"
 
 	"github.com/gin-gonic/gin"
+	log "github.com/sirupsen/logrus"
 )
 
 type walletGroupStruct struct {
@@ -15,6 +16,7 @@ var WalletGroupEndpoint = walletGroupStruct{}
 
 func (validate walletGroupStruct) GetWalletGroup(c *gin.Context) {
 	action := c.Param("action")
+	log.Info(action)
 	switch action {
 	case "getWalletGroup":
 		validate.JWTValidations(c, walletGroupService.GetListWalletGroup)

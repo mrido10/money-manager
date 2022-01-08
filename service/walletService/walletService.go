@@ -1,8 +1,9 @@
 package walletService
 
 import (
-	"log"
 	"money-manager/dao"
+
+	log "github.com/sirupsen/logrus"
 
 	"money-manager/util"
 )
@@ -10,7 +11,7 @@ import (
 func generateWalletId(userID string) (string, error) {
 	latestWalletID, err := dao.GetLastWalletID(userID)
 	if err != nil {
-		log.Println(err)
+		log.Error(err)
 		return "", err
 	}
 

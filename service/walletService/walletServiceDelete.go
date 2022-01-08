@@ -1,9 +1,10 @@
 package walletService
 
 import (
-	"log"
 	"money-manager/dao"
 	"money-manager/model"
+
+	log "github.com/sirupsen/logrus"
 )
 
 func DeleteWallet(c model.DataIN) (listData interface{}, responseCode int, msg string, err error) {
@@ -11,12 +12,12 @@ func DeleteWallet(c model.DataIN) (listData interface{}, responseCode int, msg s
 		WalletID string `json:"walletID"`
 	}
 	if err = c.GinContext.ShouldBindJSON(&dtWallet); err != nil {
-		log.Println(err)
+		log.Error(err)
 		return
 	}
 	err = dao.DeleteWallet(dtWallet.WalletID, c.UserID)
 	if err != nil {
-		log.Println(err)
+		log.Error(err)
 		return
 	}
 	responseCode = 200

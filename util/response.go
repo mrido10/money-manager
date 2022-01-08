@@ -1,9 +1,10 @@
 package util
 
 import (
-	"log"
 	"money-manager/model/responseModel"
 	"net/http"
+
+	log "github.com/sirupsen/logrus"
 
 	"github.com/gin-gonic/gin"
 )
@@ -34,7 +35,7 @@ func Response(c *gin.Context, statusCode int, msg string, data interface{}) {
 
 func ToShowResp(data interface{}, err error, c *gin.Context) {
 	if err != nil {
-		log.Println(err.Error())
+		log.Error(err.Error())
 		Response(c, 400, err.Error(), nil)
 		return
 	}

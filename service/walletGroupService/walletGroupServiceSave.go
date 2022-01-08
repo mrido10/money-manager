@@ -1,16 +1,17 @@
 package walletGroupService
 
 import (
-	"log"
 	"money-manager/dao"
 	"money-manager/model"
 	"money-manager/repository"
+
+	log "github.com/sirupsen/logrus"
 )
 
 func SaveWalletGroup(c model.DataIN) (listData interface{}, responseCode int, msg string, err error) {
 	var data repository.WalletGroup
 	if err = c.GinContext.ShouldBindJSON(&data); err != nil {
-		log.Println(err)
+		log.Error(err)
 		responseCode, msg = 400, err.Error()
 		return
 	}

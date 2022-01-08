@@ -1,15 +1,27 @@
 package main
 
 import (
+	"fmt"
+	"io"
 	"log"
 	"money-manager/controller"
+	"os"
 	"time"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"github.com/sirupsen/logrus"
 )
 
-func init() { log.SetFlags(log.Lshortfile | log.LstdFlags) }
+type PlainFormatter struct {
+    TimestampFormat string
+    LevelDesc []string
+}
+
+func init() { 
+	log.SetFlags(log.Lshortfile | log.LstdFlags) 
+	logrusInit()
+}
 
 func main() {
 	route := gin.Default()
@@ -23,4 +35,31 @@ func main() {
 		MaxAge:           12 * time.Hour,
 	}))
 	controller.Route(route)
+}
+
+func (f *PlainFormatter) Format(entry *logrus.Entry) ([]byte, error) {
+    timestamp := fmt.Sprintf(entry.Time.Format(f.TimestampFormat))
+	level := f.LevelDesc[entry.Level]
+
+	if level != "INFO" {
+		return []byte(fmt.Sprintf("[PROJECT-debug] %s [%s] %s %s\n", timestamp, level, entry.Caller.File, entry.Message)), nil
+	} else {
+		return []byte(fmt.Sprintf("[PROJECT-debug] %s [%s] %s\n", timestamp, level, entry.Message)), nil
+	}
+}
+
+// logger format
+func logrusInit() {
+	plainFormatter := new(PlainFormatter)
+    plainFormatter.TimestampFormat = "2006-01-02 15:04:05"
+    plainFormatter.LevelDesc = []string{"PANIC", "FATAL", "ERROR", "WARN", "INFO", "DEBUG"}
+
+	f, err := os.OpenFile("./log/logger.log", os.O_WRONLY | os.O_CREATE, 0755)
+	if err != nil {
+		logrus.Error(err.Error())
+	}
+	mw := io.MultiWriter(os.Stdout, f)
+	logrus.SetReportCaller(true)
+	logrus.SetOutput(mw)
+	logrus.SetFormatter(plainFormatter)
 }
