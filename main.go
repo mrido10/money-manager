@@ -54,7 +54,13 @@ func logrusInit() {
     plainFormatter.TimestampFormat = "2006-01-02 15:04:05"
     plainFormatter.LevelDesc = []string{"PANIC", "FATAL", "ERROR", "WARN", "INFO", "DEBUG"}
 
-	f, err := os.OpenFile("./log/logger.log", os.O_WRONLY | os.O_CREATE, 0755)
+	path := "./log"
+	if _, err := os.Stat(path); os.IsNotExist(err) {
+		os.Mkdir(path, os.ModePerm)
+	}
+
+	logFile := path + "/logger.log"
+	f, err := os.OpenFile(logFile, os.O_WRONLY | os.O_CREATE, 0755)
 	if err != nil {
 		logrus.Error(err.Error())
 	}
