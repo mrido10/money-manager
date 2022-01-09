@@ -3,4 +3,4 @@
 /.scannerwork
 sonar-project.properties
 __debug_bin.exe
-/log/logger.log
+/log
