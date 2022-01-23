@@ -3,7 +3,7 @@
 CREATE TABLE IF NOT EXISTS userAccount (
 	userID   varchar(20) NOT NULL ,
 	userName varchar(50) NOT NULL ,
-	joinDate datetime NOT NULL ,
+	joinDate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (userID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

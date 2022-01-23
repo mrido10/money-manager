@@ -67,6 +67,9 @@ func (e DataIn) setResponse(respData interface{}, respCode int, respMsg string, 
 	}
 
 	if err != nil {
+		if respCode == 200 {
+			respCode = 400
+		}
 		Response(c, respCode, err.Error(), nil)
 		return
 	}
