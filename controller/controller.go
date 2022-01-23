@@ -3,6 +3,7 @@ package controller
 import (
 	"fmt"
 	"money-manager/config"
+	"money-manager/endpoint/loginEndpoint"
 	"money-manager/endpoint/walletEndpoint"
 	"money-manager/endpoint/walletGroupEndpoint"
 
@@ -11,6 +12,9 @@ import (
 )
 
 func Route(route *gin.Engine) {
+	login := "/login"
+	route.POST(login, loginEndpoint.LoginEndpoint.Login)
+
 	walletRoute := "/wallet/:action"
 	route.GET(walletRoute, walletEndpoint.WalletEndpoint.GetWallet)
 	route.POST(walletRoute, walletEndpoint.WalletEndpoint.SaveWallet)

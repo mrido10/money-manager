@@ -52,18 +52,24 @@ func (e DataIn) JWTValidations(c *gin.Context, serve func(model.DataIN) (interfa
 	e.GinContext = c
 	e.UserID = claims["id"].(string)
 	e.UserName = claims["name"].(string)
+	e.setResponse(serve(e.DataIN))
+}
 
-	respData, respCode, respMsg, err := serve(e.DataIN)
+func (e DataIn) ServeWithoutJWTValidations(c *gin.Context, serve func(model.DataIN) (interface{}, int, string, error)) {
+	e.GinContext = c
+	e.setResponse(serve(e.DataIN))
+}
 
-	if err != nil {
-		Response(c, 400, err.Error(), nil)
-		return
-	}
-
+func (e DataIn) setResponse(respData interface{}, respCode int, respMsg string, err error) {
+	c := e.DataIN.GinContext
 	if (respCode == 0) {
 		respCode = 400
 	}
 
+	if err != nil {
+		Response(c, respCode, err.Error(), nil)
+		return
+	}
 
 	if respCode == 200 && respMsg == "" {
 		respMsg = "success"

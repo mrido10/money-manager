@@ -18,6 +18,9 @@ type Config struct {
 	Jwt struct {
 		Key string `yaml:"key"`
 	} `yaml:"jwt"`
+	AuthServer struct{
+		Ip string `yaml:"ip"`
+	} `yaml:"authServer"`
 }
 
 func GetConfig() (*Config, error) {
