@@ -20,7 +20,7 @@ func Route(route *gin.Engine) {
 	route.GET(walletGroupRoute, walletGroupEndpoint.WalletGroupEndpoint.GetWalletGroup)
 	route.POST(walletGroupRoute, walletGroupEndpoint.WalletGroupEndpoint.SaveWalletGroup)
 
-	creditPrint()
+	// creditPrint()
 	conf, err := config.GetConfig()
 	if err != nil {
 		log.Error(err)

@@ -1,3 +1,5 @@
+-- +migrate Up
+-- +migrate StatementBegin
 CREATE TABLE IF NOT EXISTS userAccount (
 	userID   varchar(20) NOT NULL ,
 	userName varchar(50) NOT NULL ,
@@ -72,3 +74,4 @@ CREATE TABLE IF NOT EXISTS notes (
 #define notes type (Income, Expence, Transfer)
 INSERT IGNORE INTO notesType(typeID, typeName)
 VALUES('inc', 'Income'), ('exp', 'Expence'), ('trf', 'Transfer');
+-- +migrate StatementEnd
